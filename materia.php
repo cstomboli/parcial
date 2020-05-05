@@ -27,4 +27,33 @@ class Materia{
     {
         return Datos::leerJson('materias.json');
     }
+
+    public static function Buscar($nombre, $id)
+    {
+        $array = Datos::leerJson('materias.json');
+        $retorno= false;
+
+        foreach($array as $value)
+        {
+            if($value->nombre == $nombre)
+            {
+                if($value->id ==$id)
+                {
+                    $retorno=true;
+                    
+                    $key= "pro3-parcial";
+                    $payload = array(
+                        "Nombre" => $nombre,
+                        "Id" => $id,                    
+                        "cuatrimestre"=>$value->cuatrimestre
+                    );
+                    $jwt= JWT::encode($payload,$key);
+                    echo "$jwt"; 
+                    //var_dump($payload);
+                    break; 
+                }                
+            }
+        }
+        return $retorno;
+    }
 }

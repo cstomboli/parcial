@@ -46,9 +46,11 @@ class Metod{
                     case '/materia':    //Punto 3
                         if(isset($_POST['nombre']) && isset($_POST['cuatrimestre'])) 
                         {
+                            $token=Materia::Buscar($_POST['nombre'],$_POST['cuatrimestre']);
                             $materia= new Materia($_POST['nombre'], $_POST['cuatrimestre'], null);
                             $materia->GuardarMateria(); 
                             echo "Materia creada correctamente.";
+                            echo "Guarde su token $token";
                         }
                         break;
 
@@ -103,7 +105,12 @@ class Metod{
                 switch ($this->path_info)
                 {
                     case '/materia':    //Punto 6
-                        echo  json_encode ( Materia:: Leer());
+                        $headers = getallheaders();
+                        $mitoken=$headers['token']??'';
+                        if(Materia::Buscar($mitoken))
+                        {
+                            echo  json_encode ( Materia:: Leer());
+                        }                        
                         break;
                     
                     case '/profesor':   //Punto 7
