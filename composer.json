@@ -1,0 +1,12 @@
+{
+    "name": "lenovox1carbon/parcial",
+    "authors": [
+        {
+            "name": "Carolina Stomboli",
+            "email": "carostomboli@hotmail.com"
+        }
+    ],
+    "require": {
+        "firebase/php-jwt": "^5.2"
+    }
+}
