@@ -114,7 +114,15 @@ class Metod{
                         break;
                     
                     case '/profesor':   //Punto 7
-                        echo  json_encode ( Profesor:: Leer());
+
+                        if(BuscarProfesor)
+                        {
+                            echo  json_encode ( Profesor:: Leer());
+
+                        }
+                        else{
+                            echo "no es profesor";
+                        }
                         break;
 
                     case '/asignacion': //Punto 8

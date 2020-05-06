@@ -61,7 +61,7 @@ class Profesor{
 
     }
 
-    public static function Buscar($nombre, $id)
+    public static function Buscar($nombre, $legajo, $foto)
     {
         $array = Datos::leerJson('materias.json');
         $retorno= false;
@@ -70,15 +70,15 @@ class Profesor{
         {
             if($value->nombre == $nombre)
             {
-                if($value->id ==$id)
+                if($value->legajo ==$legajo)
                 {
                     $retorno=true;
                     
                     $key= "pro3-parcial";
                     $payload = array(
                         "Nombre" => $nombre,
-                        "Id" => $id,                    
-                        "cuatrimestre"=>$value->cuatrimestre
+                        "Legajo" => $legajo,                    
+                        "Foto"=>$value->foto
                     );
                     $jwt= JWT::encode($payload,$key);
                     echo "$jwt"; 
@@ -86,6 +86,24 @@ class Profesor{
                     break; 
                 }                
             }
+        }
+        return $retorno;
+    }
+
+    
+    public static function BuscarProfesor($token)
+    {
+        $retorno=false;
+        $key= "pro3-parcial";
+        try{
+            $decoded = JWT::decode($token, $key, array('HS256'));
+            if($decoded->tipo == 'profesor')
+            {
+                $retorno=true; 
+            }
+        }
+        catch(Exception $e){
+            echo "Token no valido -> ". $e->getMessage();
         }
         return $retorno;
     }
